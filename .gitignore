@@ -1,2 +1,8 @@
 node_modules
 .env
+
+# git rm -rf node_modules
+# git add .
+# git commit -m "removed folder from git repo"
+# git push
+# win.
