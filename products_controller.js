@@ -36,13 +36,15 @@ create: (req, res, next) => {
 
     dbInstance.create_product([name, description, price, image_url])
     .then ( () => res.sendStatus(200))
-    .catch ( err => {res.status(500).send({errorMessage: "Error from create_product"})})
+    .catch ( err => {res.status(500).send({errorMessage: "Error from create_product"})
+    console.log(err)
+})
 },
 
 getOne: (req, res, next) => {
     const dbInstance = req.app.get('db')
 
-    dbInstance.read_product([params.id])
+    dbInstance.read_product(id)
     .then (() => res.sendStatus(200))
     .catch ( err => {res.status(500).send({errorMessage: "Error from read_product"})})
 },
@@ -52,11 +54,12 @@ getAll: (req, res, next) => {
 
     dbInstance.read_products()
     .then (() => res.sendStatus(200))
-    .catch ( err => {res.status(500).send({errorMessage: "Error from read_product"})})
+    .catch ( err => {res.status(500).send({errorMessage: "Error from read_products - all"})})
 },
 
 update: (req, res, next) => {
     const dbInstance = req.app.get('db')
+    const { params, query } = req
 
     dbInstance.update_product([params.id, query.desc])
     .then (() => res.sendStatus(200))
@@ -65,10 +68,20 @@ update: (req, res, next) => {
 
 deleteOne: (req, res, next) => {
         const dbInstance = req.app.get('db')
+        const { id } = req.params //error 500 cuz id wasn't defined
 
-        dbInstance.delete_product([params.id])
+        dbInstance.delete_product(id) //removed params id for id  
         .then (() => res.sendStatus(200))
         .catch ( err => {res.status(500).send({errorMessage: "Error from delete_product"})})
     }
 
 }
+
+
+//tested POST - 200 good
+// {
+// 	"name": "John Wick",
+// 	"description": "Black 2PC Suit",
+// 	"price": 800,
+// 	"image_url": "https://moviefashion.b-cdn.net/wp-content/uploads/2018/12/john-wick-suit-for-sale.jpg"
+// }
